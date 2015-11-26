@@ -3,6 +3,8 @@ package com.tradedoubler.rafty;
 import io.atomix.catalyst.transport.Address;
 import io.atomix.catalyst.transport.NettyTransport;
 import io.atomix.copycat.client.CopycatClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -12,6 +14,8 @@ import java.util.concurrent.TimeUnit;
  * @author qinwa
  */
 public class Client {
+    private static final Logger log = LoggerFactory.getLogger(Client.class);
+    
     private CopycatClient copycatClient;
 
     public Client(Address serverAddress) {
@@ -21,11 +25,13 @@ public class Client {
     }
 
     public void start() {
-        copycatClient.open().thenRun(() -> onStarted());
+        copycatClient.open().join();
+        onStarted();
+//        copycatClient.open().thenRun(() -> log.info("Successfully connected to the cluster!"));
     }
 
     private void onStarted() {
-        System.out.println("Successfully connected to the cluster!");
+        log.debug("Successfully connected to the cluster!");
 
         try{
             TrackingEvent click = new Click("c-0",0,0,0, System.currentTimeMillis());
@@ -35,8 +41,8 @@ public class Client {
             Thread.sleep(2000);
             TrackingEvent clickRead = getEvent(click.id);
             TrackingEvent trackbackRead = getEvent(trackback.id);
-            System.out.println("Read event: "+ clickRead);
-            System.out.println("Read event: "+ trackbackRead);
+            log.info("Read event: "+ clickRead);
+            log.info("Read event: "+ trackbackRead);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -44,13 +50,19 @@ public class Client {
 
     public void postEvent(TrackingEvent event) {
         copycatClient.submit(new TrackingEventCommand(event)).thenAccept(result -> {
-            System.out.println("Published event: " + result);
+            log.info("Published event: " + result);
         });
     }
 
-    public TrackingEvent getEvent(String trackingEventId) throws Exception {
+    public TrackingEvent getEvent(String trackingEventId) {
         CompletableFuture<TrackingEvent> future = copycatClient.submit(new TrackingEventQuery(trackingEventId));
-        return future.get(1, TimeUnit.SECONDS);
+        try {
+            return future.get(1, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static void main(String[] args) throws Exception {
@@ -68,7 +80,7 @@ public class Client {
         }
         public void run() {
             client.copycatClient.close();
-            System.out.println("Stopped Rafty client.");
+            log.info("Stopped Rafty client.");
         }
     }
 }

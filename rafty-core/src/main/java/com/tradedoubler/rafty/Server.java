@@ -1,9 +1,12 @@
-import com.tradedoubler.rafty.Utils;
+package com.tradedoubler.rafty;
+
 import io.atomix.catalyst.transport.Address;
 import io.atomix.catalyst.transport.NettyTransport;
 import io.atomix.copycat.server.CopycatServer;
 import io.atomix.copycat.server.storage.Storage;
 import io.atomix.copycat.server.storage.StorageLevel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -11,6 +14,8 @@ import java.util.List;
  * @author qinwa
  */
 public class Server {
+    private static final Logger log = LoggerFactory.getLogger(Server.class);
+
     private final Address serverAddress;
     private final CopycatServer copyCatServer;
 
@@ -23,14 +28,29 @@ public class Server {
                 .build();
     }
 
-    public void start() {
-        System.out.println("Starting Rafty server on " + serverAddress.toString() + "...");
+    public void start() throws InterruptedException {
+        log.info("Starting Rafty server on " + serverAddress.toString() + "...");
         copyCatServer.open().join();
+        log.info("Rafty server started!");
+        copyCatServer.onStateChange(state -> {
+            log.info("Rafty server state change to " + state);
+        });
+        while (copyCatServer.isOpen()) {
+            Thread.sleep(1000);
+        }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        log.info("####################### Starting Rafty Server ########################");
+        log.info("MembersList serverId");
+        log.info("Example of args: localhost:8521,localhost:8522,localhost:8523, 0");
+        log.info("######################################################################");
+
         List<Address> addresses = Utils.parseAddresses(args[0]);
-        Server server = new Server(addresses.get(0), addresses, "/var/log/rafty");
+        Integer serverId = Integer.parseInt(args[1]);
+        Address currentServer = addresses.get(0);
+        addresses.remove(0);
+        Server server = new Server(currentServer, addresses, "/var/log/rafty/" + serverId);
         Runtime.getRuntime().addShutdownHook(new ShutdownThread(server));
         server.start();
     }
@@ -44,7 +64,7 @@ public class Server {
 
         public void run() {
             server.copyCatServer.close();
-            System.out.println("Stopped Rafty server.");
+            log.info("Stopped Rafty server.");
         }
     }
 }

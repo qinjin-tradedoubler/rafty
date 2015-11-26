@@ -1,6 +1,5 @@
-import com.tradedoubler.rafty.TrackingEvent;
-import com.tradedoubler.rafty.TrackingEventCommand;
-import com.tradedoubler.rafty.TrackingEventQuery;
+package com.tradedoubler.rafty;
+
 import io.atomix.copycat.server.Commit;
 import io.atomix.copycat.server.StateMachine;
 import io.atomix.copycat.server.StateMachineExecutor;

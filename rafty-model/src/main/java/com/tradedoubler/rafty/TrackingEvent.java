@@ -1,9 +1,11 @@
 package com.tradedoubler.rafty;
 
+import java.io.Serializable;
+
 /**
  * @author qinwa
  */
-public abstract class TrackingEvent {
+public abstract class TrackingEvent implements Serializable{
     public enum Type{
         Click, Trackback, Impression
     }
