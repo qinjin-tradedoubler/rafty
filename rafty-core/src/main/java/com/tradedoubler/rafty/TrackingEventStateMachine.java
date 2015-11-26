@@ -33,7 +33,7 @@ public class TrackingEventStateMachine extends StateMachine {
     }
 
     private TrackingEvent addSequentialEvent(Commit<SequentialCommand> commit) {
-        log.debug("Sequential Event added: " + commit.operation().value());
+        log.debug("Sequential Event added: commitIndex-"+commit.index()+" " + commit.operation().value());
         String key  = commit.operation().key();
         sequentialMap.put(key, commit);
         sequentialEventIds.add(key);
@@ -41,7 +41,7 @@ public class TrackingEventStateMachine extends StateMachine {
     }
 
     private TrackingEvent addParallelEvent(Commit<ParallelEventCommand> commit) {
-        log.debug("Parallel Event added: " + commit.operation().value());
+        log.debug("Parallel Event added: commitIndex-" + commit.index() + " " + commit.operation().value());
         String key  = commit.operation().key();
         parallelMap.put(key, commit);
         parallelEventIds.add(key);

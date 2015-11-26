@@ -4,8 +4,6 @@ import io.atomix.copycat.client.Command;
 
 import java.io.Serializable;
 
-import static com.tradedoubler.rafty.TrackingEvent.Type.*;
-
 /**
  * This command achieves eventual consistency for all replicas.
  * @author qinwa
@@ -19,7 +17,7 @@ public class SequentialCommand implements Command<TrackingEvent>, Serializable{
 
     @Override
     public ConsistencyLevel consistency(){
-        return ConsistencyLevel.NONE;
+        return ConsistencyLevel.LINEARIZABLE;
     }
 
     public String key(){

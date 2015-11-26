@@ -31,7 +31,7 @@ public class Server {
     public void start() throws InterruptedException {
         log.info("Starting Rafty server on " + serverAddress.toString() + "...");
         copyCatServer.open().join();
-        log.info("Rafty server started!");
+        log.info("Rafty server started as "+copyCatServer.state());
         copyCatServer.onStateChange(state -> {
             log.info("Rafty server state change to " + state);
         });
@@ -50,7 +50,7 @@ public class Server {
         Integer serverId = Integer.parseInt(args[1]);
         Address currentServer = addresses.get(0);
         addresses.remove(0);
-        Server server = new Server(currentServer, addresses, "/var/log/rafty/" + serverId);
+        Server server = new Server(currentServer, addresses, System.getProperty("user.dir") + "/logs/" + serverId);
         Runtime.getRuntime().addShutdownHook(new ShutdownThread(server));
         server.start();
     }

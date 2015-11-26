@@ -21,8 +21,9 @@
     </encoder>
   </appender>
 
-  <logger name="io.atomix.catalyst" level="INFO" />
-  <logger name="com.tradedoubler.rafty" level="INFO" />
+  <logger name="io.atomix.catalyst" level="WARN" />
+  <logger name="io.atomix.copycat" level="WARN" />
+  <logger name="com.tradedoubler.rafty" level="DEBUG" />
 
   <root level="INFO">
     <appender-ref ref="STDOUT" />

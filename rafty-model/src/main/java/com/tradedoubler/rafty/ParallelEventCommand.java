@@ -5,7 +5,7 @@ import io.atomix.copycat.client.Command;
 import java.io.Serializable;
 
 /**
- * This command achieves SEQUENTIAL consistency for all replicas.
+ * This command achieves Eventual consistency for all replicas.
  * @author qinwa
  */
 public class ParallelEventCommand implements Command<TrackingEvent>, Serializable {
@@ -17,7 +17,7 @@ public class ParallelEventCommand implements Command<TrackingEvent>, Serializabl
 
     @Override
     public ConsistencyLevel consistency(){
-        return ConsistencyLevel.SEQUENTIAL;
+        return ConsistencyLevel.NONE;
     }
 
     public String key(){

@@ -19,6 +19,6 @@ public class SequentialEventQuery implements Query<TrackingEvent>, Serializable 
     }
 
     public  ConsistencyLevel consistency() {
-        return ConsistencyLevel.SEQUENTIAL;
+        return ConsistencyLevel.LINEARIZABLE;
     }
 }

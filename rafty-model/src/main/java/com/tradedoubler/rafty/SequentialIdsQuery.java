@@ -10,6 +10,6 @@ import java.util.List;
  */
 public class SequentialIdsQuery implements Query<List<String>>, Serializable {
     public  ConsistencyLevel consistency() {
-        return ConsistencyLevel.SEQUENTIAL;
+        return ConsistencyLevel.LINEARIZABLE;
     }
 }
