@@ -9,15 +9,11 @@ import static com.tradedoubler.rafty.TrackingEvent.Type.*;
 /**
  * @author qinwa
  */
-public class TrackingEventCommand implements Command, Serializable{
+public class TrackingEventCommand implements Command<TrackingEvent>, Serializable{
     private final TrackingEvent trackingEvent;
 
     public TrackingEventCommand(TrackingEvent trackingEvent) {
         this.trackingEvent = trackingEvent;
-    }
-
-    public TrackingEvent getTrackingEvent() {
-        return trackingEvent;
     }
 
     @Override
@@ -31,5 +27,13 @@ public class TrackingEventCommand implements Command, Serializable{
             default:
                 return ConsistencyLevel.SEQUENTIAL;
         }
+    }
+
+    public String key(){
+        return trackingEvent.id;
+    }
+
+    public TrackingEvent value() {
+        return trackingEvent;
     }
 }

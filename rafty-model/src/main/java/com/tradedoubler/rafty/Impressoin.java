@@ -5,7 +5,7 @@ package com.tradedoubler.rafty;
  */
 public class Impressoin extends TrackingEvent{
 
-    public Impressoin(int id, int adId, int siteId, long timeOfEvent){
+    public Impressoin(String id, int adId, int siteId, long timeOfEvent){
         super(id, adId, siteId, timeOfEvent);
     }
 

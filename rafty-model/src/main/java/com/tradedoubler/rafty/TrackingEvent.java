@@ -8,12 +8,12 @@ public abstract class TrackingEvent {
         Click, Trackback, Impression
     }
 
-    public final int id;
+    public final String id;
     public final long timeOfEvent;
     public final int adId;
     public final int siteId;
 
-    public TrackingEvent(int id, int adId, int siteId, long timeOfEvent) {
+    public TrackingEvent(String id, int adId, int siteId, long timeOfEvent) {
         this.id = id;
         this.adId = adId;
         this.siteId = siteId;
@@ -21,4 +21,10 @@ public abstract class TrackingEvent {
     }
 
     public abstract Type getType();
+
+    @Override
+    public String toString(){
+        String str = getType()+" - id="+id+" - adId="+adId+" - siteId="+siteId+" - timeOfEvent="+timeOfEvent;
+        return str;
+    }
 }

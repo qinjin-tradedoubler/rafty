@@ -6,7 +6,7 @@ package com.tradedoubler.rafty;
 public class Click extends TrackingEvent {
     public final int guidHash;
 
-    public Click(int id, int adId, int siteId,  int guidHash, long timeOfEvent){
+    public Click(String id, int adId, int siteId,  int guidHash, long timeOfEvent){
         super(id, adId, siteId, timeOfEvent);
         this.guidHash = guidHash;
     }
@@ -14,5 +14,11 @@ public class Click extends TrackingEvent {
     @Override
     public Type getType() {
         return Type.Click;
+    }
+
+    @Override
+    public String toString(){
+        String str = super.toString();
+        return str + " - guidHash="+guidHash;
     }
 }

@@ -16,21 +16,52 @@
 
     <packaging>pom</packaging>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.tradedoubler.rafty</groupId>
+                <artifactId>rafty-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.atomix.copycat</groupId>
+                <artifactId>copycat-server</artifactId>
+                <version>1.0.0-beta2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.atomix.copycat</groupId>
+                <artifactId>copycat-client</artifactId>
+                <version>1.0.0-beta2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.atomix.catalyst</groupId>
+                <artifactId>catalyst-netty</artifactId>
+                <version>1.0.0-rc4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>18.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>io.atomix.copycat</groupId>
             <artifactId>copycat-server</artifactId>
-            <version>1.0.0-beta2</version>
         </dependency>
         <dependency>
             <groupId>io.atomix.copycat</groupId>
             <artifactId>copycat-client</artifactId>
-            <version>1.0.0-beta2</version>
         </dependency>
         <dependency>
             <groupId>io.atomix.catalyst</groupId>
             <artifactId>catalyst-netty</artifactId>
-            <version>1.0.0-rc4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
 

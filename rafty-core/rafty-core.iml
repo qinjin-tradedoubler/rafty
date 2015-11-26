@@ -16,6 +16,8 @@
     <orderEntry type="library" name="Maven: io.atomix.copycat:copycat-server:1.0.0-beta2" level="project" />
     <orderEntry type="library" name="Maven: io.atomix.copycat:copycat-protocol:1.0.0-beta2" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />
+    <orderEntry type="library" name="Maven: io.atomix.copycat:copycat-client:1.0.0-beta2" level="project" />
     <orderEntry type="library" name="Maven: io.atomix.catalyst:catalyst-netty:1.0.0-rc4" level="project" />
     <orderEntry type="library" name="Maven: io.atomix.catalyst:catalyst-transport:1.0.0-rc4" level="project" />
     <orderEntry type="library" name="Maven: io.atomix.catalyst:catalyst-common:1.0.0-rc4" level="project" />
@@ -27,6 +29,5 @@
     <orderEntry type="library" name="Maven: io.netty:netty-codec:4.0.21.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-transport-native-epoll:4.0.21.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-common:4.0.21.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.atomix.copycat:copycat-client:1.0.0-beta2" level="project" />
   </component>
 </module>

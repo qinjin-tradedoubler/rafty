@@ -11,4 +11,10 @@
 
     <artifactId>rafty-model</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.atomix.catalyst</groupId>
+            <artifactId>catalyst-netty</artifactId>
+        </dependency>
+    </dependencies>
 </project>
