@@ -24,10 +24,4 @@ public class Trackback extends TrackingEvent {
     public Type getType() {
         return Type.Trackback;
     }
-
-    @Override
-    public String toString(){
-        String str = super.toString();
-        return str + " - guidHash="+guidHash+" - trackedClick="+clickId;
-    }
 }

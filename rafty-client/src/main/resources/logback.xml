@@ -22,7 +22,7 @@
   </appender>
 
   <logger name="io.atomix.catalyst" level="INFO" />
-  <logger name="com.tradedoubler.rafty" level="DEBUG" />
+  <logger name="com.tradedoubler.rafty" level="INFO" />
 
   <root level="INFO">
     <appender-ref ref="STDOUT" />

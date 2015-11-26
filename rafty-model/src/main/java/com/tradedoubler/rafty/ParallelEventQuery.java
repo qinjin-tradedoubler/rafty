@@ -7,14 +7,18 @@ import java.io.Serializable;
 /**
  * @author qinwa
  */
-public class TrackingEventQuery implements Query<TrackingEvent>, Serializable {
+public class ParallelEventQuery implements Query<TrackingEvent>, Serializable {
     private final String trackingEventId;
 
-    public TrackingEventQuery(String trackingEventId){
+    public ParallelEventQuery(String trackingEventId){
         this.trackingEventId = trackingEventId;
     }
 
     public String key(){
         return trackingEventId;
+    }
+
+    public  ConsistencyLevel consistency() {
+        return ConsistencyLevel.CAUSAL;
     }
 }

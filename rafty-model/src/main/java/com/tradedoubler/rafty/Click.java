@@ -15,10 +15,4 @@ public class Click extends TrackingEvent {
     public Type getType() {
         return Type.Click;
     }
-
-    @Override
-    public String toString(){
-        String str = super.toString();
-        return str + " - guidHash="+guidHash;
-    }
 }

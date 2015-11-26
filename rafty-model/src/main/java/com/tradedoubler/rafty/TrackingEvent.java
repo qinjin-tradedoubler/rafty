@@ -26,7 +26,8 @@ public abstract class TrackingEvent implements Serializable{
 
     @Override
     public String toString(){
-        String str = getType()+" - id="+id+" - adId="+adId+" - siteId="+siteId+" - timeOfEvent="+timeOfEvent;
-        return str;
+//        String str = getType()+" - id="+id+" - adId="+adId+" - siteId="+siteId+" - timeOfEvent="+timeOfEvent;
+//        return str;
+        return id;
     }
 }
