@@ -13,16 +13,15 @@ import java.util.List;
 public class RunTests {
     private static final Logger log = LoggerFactory.getLogger(Client.class);
 
-    private static final int NUM_CLIENTS = 3;
-    private static final int NUM_EVENT_PER_TYPE = 100;
+    private static int NUM_EVENT_PER_TYPE = 100;
 
     private static void runTests(List<Client> clients) {
         log.info("All clients have been connected to the cluster!");
-
+        int numClients = clients.size();
         //Trackbacks
         List<ClientWorker> clientWorkers = Lists.newArrayList();
         for (int i = 0; i < clients.size(); i++) {
-            ClientWorker worker = new ClientWorker(clients.get(i), TrackingEvent.Type.Trackback);
+            ClientWorker worker = new ClientWorker(clients.get(i), numClients, TrackingEvent.Type.Trackback);
             clientWorkers.add(worker);
         }
 
@@ -39,7 +38,7 @@ public class RunTests {
         //Impressions
         clientWorkers.clear();
         for (int i = 0; i < clients.size(); i++) {
-            ClientWorker worker = new ClientWorker(clients.get(i), TrackingEvent.Type.Impression);
+            ClientWorker worker = new ClientWorker(clients.get(i), numClients, TrackingEvent.Type.Impression);
             clientWorkers.add(worker);
         }
 
@@ -67,11 +66,13 @@ public class RunTests {
     }
 
     public static void main(String[] args) throws Exception {
+        log.info("####################### Starting Rafty Test ########################");
+        log.info("MembersList NumberOfEventPerType");
+        log.info("Example of args: localhost:8521,localhost:8522,localhost:8523, 1000");
+        log.info("######################################################################");
         //Each client connect to one raft server.
         List<Address> addresses = Utils.parseAddresses(args[0]);
-        if (NUM_CLIENTS != addresses.size()) {
-            throw new RuntimeException("Client number should equals to addresses " + NUM_CLIENTS + " != " + addresses.size());
-        }
+        NUM_EVENT_PER_TYPE = Integer.parseInt(args[1]);
         List<Client> clients = Lists.newArrayList();
         for (int i = 0; i < addresses.size(); i++) {
             Client client = new Client(i, addresses.get(i));
@@ -98,16 +99,18 @@ public class RunTests {
 
     private static class ClientWorker extends Thread {
         private final Client client;
+        private final int numClients;
         private final TrackingEvent.Type eventType;
 
-        public ClientWorker(Client client, TrackingEvent.Type eventType) {
+        public ClientWorker(Client client, int numClients, TrackingEvent.Type eventType) {
             this.client = client;
+            this.numClients = numClients;
             this.eventType = eventType;
         }
 
         public void run() {
             for (int i = 0; i < NUM_EVENT_PER_TYPE; i++) {
-                if (i % NUM_CLIENTS == client.getId()) {
+                if (i % numClients == client.getId()) {
                     if (eventType == TrackingEvent.Type.Trackback) {
                         TrackingEvent trackback = new Trackback("t" + i, 0, 0, 0, System.nanoTime());
                         client.postSequentialEvent(trackback);
